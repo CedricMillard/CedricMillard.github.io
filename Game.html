@@ -1,8 +1,6 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<!--<meta name="viewport" content="width=device-width, initial-scale=1" />-->
-<!--<link rel="stylesheet" type="text/css" href="http://cedric.millard.free.fr/MyHAS.css">-->
 <script>
     var cards_Cabrakan=["6", "10", "12", "15", "18", "20", "24", "26", "30", "35", "38", "43", "46", "54", "59", "60", "75", "85", "95","Start"];
     var cards_Trial=["11", "16", "21", "25", "35", "42", "46", "48", "67", "Start"];
@@ -21,25 +19,31 @@
 
 <body>
     
-    <h1 id="toto">UNLOCK</h1>
+    <h1>UNLOCK!</h1>
+    <i>!!! Do not refresh this page or the game will reset !!!</i><br>
     <h2 id="chrono" style="display:none;">MM:SS</h2>
-
+    <p id="click">Click on the card when ready to start</p>
     <div id="CardDeck">
-        <img id="Tuto" src="./" id="Tuto" onclick="if(confirm('Ready to start the Game?')) {this.style.display='none'; StartGame();}" width=360>
+        <img id="Tuto" src="./" id="Tuto" onclick="if(confirm('Ready to start the Game?')) {document.getElementById('click').style.display='none';this.style.display='none'; StartGame();}" width=360 onmouseover="this.style.cursor = 'pointer';">
         <script>document.getElementById("Tuto").src="./"+gameName+"/"+gameName+"_Tuto.png";</script>
 
-        <img src="./" id="TemplateCard" style="display:none;" onclick="returnCard(this.id);" width=120>
+        <img src="./" id="TemplateCard" name="" style="display:none;" onclick="returnCard(this.id);" width=120 onmouseover="this.style.border = 'thin solid red';" onmouseout="this.style.borderWidth = '0';">
 
         <div id="end"></div>
     </div> 
     <hr>
+    <i>Click on a card to dismiss it</i>
     <div id="VisibleCard">
 
-        <img src="./" id="TemplateCardV" style="display:none;" onclick="discardCard(this.id);" onmouseover="this.width=this.width*1.3;" onmouseout="this.width=this.width/1.3;">
+        <img src="./" id="TemplateCardV" name="" style="display:none;" onclick="discardCard(this.name);" onmouseover="this.width=this.width*1.3;" onmouseout="this.width=this.width/1.3;">
 
         <div id="endV"></div>
     </div> 
-    
+    <hr>
+    <div id="DismissedCard">
+        <img src="./" id="TemplateCardD" name="" style="display:none;" onmouseover="this.width=this.width*5;" onmouseout="this.width=this.width/5;">
+        <div id="endD"></div>
+    </div>
     
     <script>
         function StartGame()
