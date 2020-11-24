@@ -8,6 +8,12 @@ function addCard(numCard)
     document.getElementById("CardDeck").insertBefore(cln, document.getElementById("end"));
 }
 
+//Handle high resolution images
+function checkImageSize()
+{
+    if(this.width==480) this.width = this.width/2;
+}
+
 function returnCard(numCard)
 {
     var cln = document.getElementById("TemplateCardV").cloneNode(false);
@@ -17,6 +23,8 @@ function returnCard(numCard)
     cln.style.display = "inline-block";
     document.getElementById(numCard).style.display = "none";
     document.getElementById("VisibleCard").insertBefore(cln, document.getElementById("endV"));
+    cln.addEventListener("load", checkImageSize);
+    
 }
 
 function discardCard(numCard)
@@ -30,8 +38,8 @@ function discardCard(numCard)
         cln.src = "./"+gameName+"/"+gameName+"_" + numCard + ".png";
         cln.style.display = "inline-block";
         document.getElementById("DismissedCard").insertBefore(cln, document.getElementById("endD"));
-        cln.width=cln.width/4;
-
+        if(cln.width==480) cln.width=cln.width/8;
+        else cln.width=cln.width/4;
     }
 }
 

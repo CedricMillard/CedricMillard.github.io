@@ -5,6 +5,8 @@
     var cards_Cabrakan=["6", "10", "12", "15", "18", "20", "24", "26", "30", "35", "38", "43", "46", "54", "59", "60", "75", "85", "95","Start"];
     var cards_Trial=["11", "16", "21", "25", "35", "42", "46", "48", "67", "Start"];
     var cards_Elite=["4", "15", "21", "22", "32", "35", "42", "47", "50", "60", "63", "67", "73", "79", "80", "85", "C", "K", "M","Start"];
+    var cards_5thAvenue=["8", "11", "15", "22", "25", "30", "37", "42", "43", "44", "52", "58", "66", "73", "86", "92", "C", "F", "G", "H", "R", "V", "W", "Start"];
+
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     var gameName=urlParams.get("GameName");
@@ -12,6 +14,7 @@
     if(gameName=="Cabrakan") cards = cards_Cabrakan;
     if(gameName=="Trial") cards = cards_Trial;
     if(gameName=="Elite") cards = cards_Elite;
+    if(gameName=="5thAvenue") cards = cards_5thAvenue;
 </script>
 <script src="./Unlock.js"></script>
 
@@ -35,7 +38,7 @@
     <i>Click on a card to dismiss it</i>
     <div id="VisibleCard">
 
-        <img src="./" id="TemplateCardV" name="" style="display:none;" onclick="discardCard(this.name);" onmouseover="this.width=this.width*1.3;" onmouseout="this.width=this.width/1.3;">
+        <img src="./" id="TemplateCardV" name="" style="display:none;" onclick="discardCard(this.name);" onmouseover="this.width=this.width*1.5;" onmouseout="this.width=this.width/1.5;">
 
         <div id="endV"></div>
     </div> 
