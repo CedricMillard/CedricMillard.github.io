@@ -305,7 +305,6 @@ function sendForm() {
 
   if(strRule.length<=450)
   {
-    document.getElementById("ID").disabled = true;
     document.getElementById("NbRule").disabled = true;
     for(i=0; i<=nbRule; i++)
     {
