@@ -283,27 +283,48 @@ customElements.define('range-picker', rangePicker);
 function sendForm() {
   updateFreq();
   document.getElementById("NbRule").value = nbRule;
-  var ruleLen = 12 + nbVisibleRule * 54;
-
+  const rules = {rules : []};
   for(i=1; i<=nbRule; i++)
   {
-    document.getElementById("rule"+i).disabled = (i?false:true);
     if(document.getElementById("status"+i).value != "deleted")
     {
-      ruleLen += document.getElementById("Freq"+i).value.length + document.getElementById("rule"+i).value.length;
+      const rule = {};
+      rule.freq = document.getElementById("Freq"+i).value;
+      rule.rule = document.getElementById("rule"+i).value;
+      rule.active = document.getElementById("Active"+i).checked;
+      if(document.getElementById("turnON"+i).checked) rule.action = "turnON";
+      else if(document.getElementById("blink"+i).type == "radio" && document.getElementById("blink"+i).checked) rule.action = "blink";
+      else rule.action = "turnOFF";
+      
+      rules.rules.push(rule);
     }
   }
+  
+  const strRule = JSON.stringify(rules);
+  document.getElementById("output").value = strRule;
 
-  if(ruleLen<=450)
+  if(strRule.length<=450)
   {
+    document.getElementById("ID").disabled = true;
+    document.getElementById("NbRule").disabled = true;
     for(i=0; i<=nbRule; i++)
     {
-      document.getElementById("rule"+i).disabled = (i?false:true);
+      document.getElementById("rule"+i).disabled = true;
+      document.getElementById("Mon"+i).disabled = true;
+      document.getElementById("Tue"+i).disabled = true;
+      document.getElementById("Wed"+i).disabled = true;
+      document.getElementById("Thu"+i).disabled = true;
+      document.getElementById("Fri"+i).disabled = true;
+      document.getElementById("Sat"+i).disabled = true;
+      document.getElementById("Sun"+i).disabled = true;
+      document.getElementById("Freq"+i).disabled = true;
+      
 
       for(j=1; j<=document.getElementById("NbCondition"+i).value; j++)
       {
         document.getElementById("variable_"+j+"_"+i).disabled = true;
         document.getElementById("operator_"+j+"_"+i).disabled = true;
+	document.getElementById("CarWTemp_"+j+"_"+i).disabled = true;
         //if(document.getElementById("time_"+j+"_"+i).value != "")
           document.getElementById("time_"+j+"_"+i).disabled = true;
         //if(document.getElementById("temp_"+j+"_"+i).value != "")
@@ -312,9 +333,9 @@ function sendForm() {
       }
 
       document.getElementById("Active"+i).disabled = true;
-      document.getElementById("turnON"+i).disabled = (i?false:true);
+      document.getElementById("turnON"+i).disabled = true;
       //document.getElementById("turnOFF"+i).disabled = (i?false:true);
-      if(document.getElementById("blink"+i).type == "radio") document.getElementById("blink"+i).disabled = (i?false:true);
+      /*if(document.getElementById("blink"+i).type == "radio")*/ document.getElementById("blink"+i).disabled = true;
     }
     document.getElementById("FormR").submit();
   }
@@ -378,12 +399,13 @@ function updateRule(iIndex=1, iCondNb = 1, checkEvent=true)
   var variableType;
   if(document.getElementById(optField).dataset.type!="undefined")
     variableType = document.getElementById(optField).dataset.type;
-
+  
   if(variableType=="timeRange")
   {
     document.getElementById("operator_"+condNb+"_"+index).style.display = "none";
     document.getElementById("inf_"+condNb+"_"+index).disabled = true;
     document.getElementById("sup_"+condNb+"_"+index).disabled = true;
+    
     document.getElementById("time_"+condNb+"_"+index).type = "hidden";
     document.getElementById("temp_"+condNb+"_"+index).type = "hidden";
     document.getElementById("tempLabel_"+condNb+"_"+index).style.display = "none";
@@ -461,7 +483,6 @@ function computeRule(index)
     else if(document.getElementById("Condition_"+i+"_"+index).style.display!="none") sRule = sRule+";"+computeCondition(index, i);
   }
 
-  //alert("rule"+index+" "+sRule);
   document.getElementById("rule"+index).value = sRule;
 }
 
